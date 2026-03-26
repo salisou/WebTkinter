@@ -56,18 +56,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* All lesson content containers (hidden, just data source) */
   var lessonEls = [];
-  for (var i = 0; i < 12; i++) {
+  for (var i = 0; i < total; i++) {
     var el = document.getElementById('lesson-' + i);
     if (el) lessonEls[i] = el;
   }
 
   /* ── Sidebar toggle ── */
   function isMobile() { return window.innerWidth <= 820; }
-  function openSidebar() { leftSidebar.classList.add('open'); overlay.classList.add('show'); hamburger.classList.add('open'); }
-  function closeSidebar() { leftSidebar.classList.remove('open'); overlay.classList.remove('show'); hamburger.classList.remove('open'); }
-  function toggleSidebar() { leftSidebar.classList.contains('open') ? closeSidebar() : openSidebar(); }
-  hamburger.addEventListener('click', toggleSidebar);
-  overlay.addEventListener('click', closeSidebar);
+
+  function openSidebar() {
+    if (leftSidebar) leftSidebar.classList.add('open');
+    if (overlay) overlay.classList.add('show');
+    if (hamburger) hamburger.classList.add('open');
+  }
+  function closeSidebar() {
+    if (leftSidebar) leftSidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('show');
+    if (hamburger) hamburger.classList.remove('open');
+  }
+  function toggleSidebar() {
+    if (!leftSidebar) return;
+    if (isMobile()) {
+      /* mobile: overlay mode */
+      leftSidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+    } else {
+      /* desktop: push/collapse mode */
+      var layout = document.querySelector('.layout');
+      var collapsed = leftSidebar.classList.toggle('desktop-collapsed');
+      if (hamburger) hamburger.classList.toggle('open', !collapsed);
+      if (layout) layout.classList.toggle('sidebar-collapsed', collapsed);
+    }
+  }
+
+  if (hamburger) hamburger.addEventListener('click', toggleSidebar);
+  if (overlay) overlay.addEventListener('click', closeSidebar);
   window.addEventListener('resize', function () { if (!isMobile()) closeSidebar(); });
 
   /* ── Render lesson into the card ── */
@@ -113,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var num = String(idx + 1).padStart(2, '0');
     if (topTitle) topTitle.textContent = 'lezione-' + num;
     if (lhTitle)  lhTitle.textContent  = lessonNames[idx];
-    if (lfLeft)   lfLeft.textContent   = 'Lezione ' + (idx + 1) + ' di 12';
+    if (lfLeft)   lfLeft.textContent   = 'Lezione ' + (idx + 1) + ' di ' + total;
 
     /* Buttons state */
     updateButtons();
@@ -241,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (e.key === 'Enter') {
         var q = searchInput.value.trim().toLowerCase();
         if (!q) return;
-        for (var i = 0; i < 12; i++) {
+        for (var i = 0; i < total; i++) {
           var el = lessonEls[i];
           if (el && el.textContent.toLowerCase().indexOf(q) !== -1) {
             goTo(i); searchInput.value = ''; break;
@@ -250,6 +272,63 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
+
+  /* ── Theme Switcher ── */
+  var themeToggleBtn = document.getElementById('themeToggleBtn');
+  var themeDropdown  = document.getElementById('themeDropdown');
+  var themeOpts      = document.querySelectorAll('.theme-opt');
+
+  var THEMES = {
+    light:    { label: 'Chiaro',  icon: '☀️' },
+    dark:     { label: 'Scuro',   icon: '🌙' },
+    midnight: { label: 'Notte',   icon: '🌌' },
+    forest:   { label: 'Foresta', icon: '🌿' },
+    sepia:    { label: 'Seppia',  icon: '📜' }
+  };
+
+  function applyTheme(name) {
+    document.documentElement.setAttribute('data-theme', name);
+    /* update active state on buttons */
+    themeOpts.forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-theme') === name);
+    });
+    /* save to localStorage */
+    try { localStorage.setItem('corso-theme', name); } catch(e) {}
+    /* update toggle button icon */
+    var t = THEMES[name] || THEMES.light;
+    if (themeToggleBtn) {
+      themeToggleBtn.querySelector('span').textContent = t.icon + ' ' + t.label;
+    }
+  }
+
+  /* toggle dropdown open/close */
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      themeDropdown.classList.toggle('open');
+    });
+  }
+
+  /* close dropdown when clicking outside */
+  document.addEventListener('click', function(e) {
+    if (themeDropdown && !themeDropdown.contains(e.target) &&
+        themeToggleBtn && !themeToggleBtn.contains(e.target)) {
+      themeDropdown.classList.remove('open');
+    }
+  });
+
+  /* theme option click */
+  themeOpts.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      applyTheme(btn.getAttribute('data-theme'));
+      themeDropdown.classList.remove('open');
+    });
+  });
+
+  /* restore saved theme or default to light */
+  var savedTheme = 'light';
+  try { savedTheme = localStorage.getItem('corso-theme') || 'light'; } catch(e) {}
+  applyTheme(savedTheme);
 
   /* ── Init ── */
   goTo(0);
