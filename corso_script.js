@@ -1,143 +1,177 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-  /* ── Lesson data (badge, title, meta extracted from content) ── */
+  /* ══════════════════════════════════════════
+     LESSON METADATA
+  ══════════════════════════════════════════ */
   var lessonMeta = [
-    { badge:'📚 Lezione 01 · Fondamenti', title:'Introduzione a <span class="highlight">Tkinter</span>', meta:'~15 min · Principianti · Python 3.x' },
-    { badge:'📐 Lezione 02 · Fondamenti', title:'La tua <span class="highlight">Prima Finestra</span>', meta:'~20 min · Principianti' },
-    { badge:'🧩 Lezione 03 · Fondamenti', title:'I <span class="highlight">Widget</span> Principali', meta:'~30 min · Principianti' },
-    { badge:'📏 Lezione 04 · Fondamenti', title:'Layout & <span class="highlight">Geometry Managers</span>', meta:'~25 min · Principianti' },
-    { badge:'⚡ Lezione 05 · Intermedio', title:'Eventi & <span class="highlight">Comandi</span>', meta:'~25 min · Intermedio' },
-    { badge:'🔗 Lezione 06 · Intermedio', title:'Variabili Tkinter & <span class="highlight">Binding</span>', meta:'~20 min · Intermedio' },
-    { badge:'🪟 Lezione 07 · Intermedio', title:'Finestre Multiple & <span class="highlight">Menu</span>', meta:'~25 min · Intermedio' },
-    { badge:'🎯 Lezione 08 · Progetto',   title:'Progetto: <span class="highlight">Calcolatrice</span> Completa', meta:'~45 min · Progetto Guidato' },
-    { badge:'🎨 Lezione 09 · Avanzato',   title:'Stili <span class="highlight">ttk</span> — Widget Moderni', meta:'~25 min · Avanzato' },
-    { badge:'🖼️ Lezione 10 · Avanzato',  title:'Canvas & <span class="highlight">Disegno Grafico</span>', meta:'~30 min · Avanzato' },
-    { badge:'⏱️ Lezione 11 · Avanzato',  title:'Animazioni & <span class="highlight">after()</span>', meta:'~25 min · Avanzato' },
-    { badge:'🗄️ Lezione 12 · Avanzato',  title:'Database <span class="highlight">SQLite</span> con GUI', meta:'~40 min · Avanzato' },
-    { badge:'🖥️ Lezione 13 · Tkinter Pro', title:'Tkinter <span class="highlight">Avanzato</span> — Temi & Architettura', meta:'~50 min · Esperto' },
-    { badge:'🗃️ Lezione 14 · SQL Server',  title:'<span class="highlight">SQL Server</span> con Python & Tkinter', meta:'~55 min · Esperto' }
-  ];
-  var lessonNames = [
-    'Lezione 01 — Introduzione a Tkinter','Lezione 02 — Prima Finestra',
-    'Lezione 03 — Widget Principali','Lezione 04 — Layout & Geometry',
-    'Lezione 05 — Eventi & Comandi','Lezione 06 — Variabili & Binding',
-    'Lezione 07 — Finestre & Menu','Lezione 08 — Calcolatrice',
-    'Lezione 09 — Stili ttk','Lezione 10 — Canvas & Disegno',
-    'Lezione 11 — Animazioni','Lezione 12 — SQLite con GUI',
-    'Lezione 13 — Tkinter Avanzato','Lezione 14 — SQL Server con Python'
+    { badge:'📚 Lezione 01 · Fondamenti',   title:'Introduzione a <span class="highlight">Tkinter</span>',           meta:'~15 min · Principianti · Python 3.x' },
+    { badge:'📐 Lezione 02 · Fondamenti',   title:'La tua <span class="highlight">Prima Finestra</span>',            meta:'~20 min · Principianti' },
+    { badge:'🧩 Lezione 03 · Fondamenti',   title:'I <span class="highlight">Widget</span> Principali',              meta:'~30 min · Principianti' },
+    { badge:'📏 Lezione 04 · Fondamenti',   title:'Layout & <span class="highlight">Geometry Managers</span>',       meta:'~25 min · Principianti' },
+    { badge:'⚡ Lezione 05 · Intermedio',   title:'Eventi & <span class="highlight">Comandi</span>',                  meta:'~25 min · Intermedio' },
+    { badge:'🔗 Lezione 06 · Intermedio',   title:'Variabili Tkinter & <span class="highlight">Binding</span>',      meta:'~20 min · Intermedio' },
+    { badge:'🪟 Lezione 07 · Intermedio',   title:'Finestre Multiple & <span class="highlight">Menu</span>',         meta:'~25 min · Intermedio' },
+    { badge:'🎯 Lezione 08 · Progetto',     title:'Progetto: <span class="highlight">Calcolatrice</span> Completa',  meta:'~45 min · Progetto Guidato' },
+    { badge:'🎨 Lezione 09 · Avanzato',     title:'Stili <span class="highlight">ttk</span> — Widget Moderni',       meta:'~25 min · Avanzato' },
+    { badge:'🖼️ Lezione 10 · Avanzato',    title:'Canvas & <span class="highlight">Disegno Grafico</span>',          meta:'~30 min · Avanzato' },
+    { badge:'⏱️ Lezione 11 · Avanzato',    title:'Animazioni & <span class="highlight">after()</span>',              meta:'~25 min · Avanzato' },
+    { badge:'🗄️ Lezione 12 · Avanzato',    title:'Database <span class="highlight">SQLite</span> con GUI',           meta:'~40 min · Avanzato' },
+    { badge:'🖥️ Lezione 13 · Tkinter Pro', title:'Tkinter <span class="highlight">Avanzato</span> — Temi & OOP',    meta:'~50 min · Esperto' },
+    { badge:'🗃️ Lezione 14 · SQL Server',   title:'<span class="highlight">SQL Server</span> con Python & Tkinter',  meta:'~55 min · Esperto' },
+    { badge:'📊 Lezione 15 · Grafica',       title:'Grafica & <span class="highlight">Matplotlib</span> con Tkinter',    meta:'~60 min · Esperto' }
   ];
 
-  /* ── State ── */
-  var current = 0, total = 14;
+  var lessonNames = [
+    'Lezione 01 — Introduzione a Tkinter', 'Lezione 02 — Prima Finestra',
+    'Lezione 03 — Widget Principali',      'Lezione 04 — Layout & Geometry',
+    'Lezione 05 — Eventi & Comandi',       'Lezione 06 — Variabili & Binding',
+    'Lezione 07 — Finestre & Menu',        'Lezione 08 — Calcolatrice',
+    'Lezione 09 — Stili ttk',             'Lezione 10 — Canvas & Disegno',
+    'Lezione 11 — Animazioni',             'Lezione 12 — SQLite con GUI',
+    'Lezione 13 — Tkinter Avanzato',       'Lezione 14 — SQL Server con Python', 'Lezione 15 — Grafica & Matplotlib'
+  ];
+
+  /* ══════════════════════════════════════════
+     STATE
+  ══════════════════════════════════════════ */
+  var current  = 0;
+  var total    = 15;
   var completed = new Set();
 
-  /* ── Elements ── */
-  var hamburger   = document.getElementById('hamburger');
-  var leftSidebar = document.getElementById('leftSidebar');
-  var overlay     = document.getElementById('sidebarOverlay');
-  var topTitle    = document.getElementById('topTitle');
-  var lhTitle     = document.getElementById('lhTitle');
-  var lessonCardTop = document.getElementById('lessonCardTop');
-  var lessonBody    = document.getElementById('lessonBody');
-  var lfLeft        = document.getElementById('lfLeft');
+  /* ══════════════════════════════════════════
+     ELEMENT REFERENCES (all null-safe)
+  ══════════════════════════════════════════ */
+  function el(id) { return document.getElementById(id); }
 
-  /* Progress elements */
-  var progressCircle     = document.getElementById('progressCircle');
-  var progressPillLabel  = document.getElementById('progressPillLabel');
-  var sidebarProgressBar = document.getElementById('sidebarProgressBar');
-  var sidebarProgressLabel = document.getElementById('sidebarProgressLabel');
-  var sidebarProgressPct   = document.getElementById('sidebarProgressPct');
-  var statDone   = document.getElementById('statDone');
-  var statPct    = document.getElementById('statPct');
-  var rpRing     = document.getElementById('rpRing');
-  var rpProgressBar   = document.getElementById('rpProgressBar');
-  var rpProgressLabel = document.getElementById('rpProgressLabel');
-  var rpCurrentLesson = document.getElementById('rpCurrentLesson');
+  var hamburger          = el('hamburger');
+  var leftSidebar        = el('leftSidebar');
+  var overlay            = el('sidebarOverlay');
+  var topTitle           = el('topTitle');
+  var lhTitle            = el('lhTitle');
+  var lessonCardTop      = el('lessonCardTop');
+  var lessonBody         = el('lessonBody');
+  var lfLeft             = el('lfLeft');
+  var progressCircle     = el('progressCircle');
+  var progressPillLabel  = el('progressPillLabel');
+  var sidebarProgressBar = el('sidebarProgressBar');
+  var sidebarProgressLbl = el('sidebarProgressLabel');
+  var sidebarProgressPct = el('sidebarProgressPct');
+  var rpRing             = el('rpRing');
+  var rpProgressBar      = el('rpProgressBar');
+  var rpProgressLabel    = el('rpProgressLabel');
+  var rpCurrentLesson    = el('rpCurrentLesson');
 
-  /* All lesson content containers (hidden, just data source) */
+  /* Collect lesson data elements */
   var lessonEls = [];
   for (var i = 0; i < total; i++) {
-    var el = document.getElementById('lesson-' + i);
-    if (el) lessonEls[i] = el;
+    var src = el('lesson-' + i);
+    if (src) lessonEls[i] = src;
   }
 
-  /* ── Sidebar toggle ── */
+  /* ══════════════════════════════════════════
+     SIDEBAR
+  ══════════════════════════════════════════ */
   function isMobile() { return window.innerWidth <= 820; }
 
   function openSidebar() {
-    if (leftSidebar) leftSidebar.classList.add('open');
-    if (overlay) overlay.classList.add('show');
-    if (hamburger) hamburger.classList.add('open');
+    if (leftSidebar) { leftSidebar.classList.add('open'); leftSidebar.classList.remove('desktop-collapsed'); }
+    if (overlay)     overlay.classList.add('show');
+    if (hamburger)   hamburger.classList.add('open');
   }
+
   function closeSidebar() {
     if (leftSidebar) leftSidebar.classList.remove('open');
-    if (overlay) overlay.classList.remove('show');
-    if (hamburger) hamburger.classList.remove('open');
+    if (overlay)     overlay.classList.remove('show');
+    if (hamburger)   hamburger.classList.remove('open');
   }
+
   function toggleSidebar() {
     if (!leftSidebar) return;
     if (isMobile()) {
-      /* mobile: overlay mode */
       leftSidebar.classList.contains('open') ? closeSidebar() : openSidebar();
     } else {
-      /* desktop: push/collapse mode */
       var layout = document.querySelector('.layout');
-      var collapsed = leftSidebar.classList.toggle('desktop-collapsed');
-      if (hamburger) hamburger.classList.toggle('open', !collapsed);
-      if (layout) layout.classList.toggle('sidebar-collapsed', collapsed);
+      var isCollapsed = leftSidebar.classList.toggle('desktop-collapsed');
+      if (layout) layout.classList.toggle('sidebar-collapsed', isCollapsed);
+      if (hamburger) hamburger.classList.toggle('open', !isCollapsed);
     }
   }
 
-  if (hamburger) hamburger.addEventListener('click', toggleSidebar);
-  if (overlay) overlay.addEventListener('click', closeSidebar);
-  window.addEventListener('resize', function () { if (!isMobile()) closeSidebar(); });
+  if (hamburger)  hamburger.addEventListener('click', toggleSidebar);
+  if (overlay)    overlay.addEventListener('click', closeSidebar);
 
-  /* ── Render lesson into the card ── */
+  window.addEventListener('resize', function () {
+    if (!isMobile()) {
+      if (leftSidebar) leftSidebar.classList.remove('open');
+      if (overlay)     overlay.classList.remove('show');
+    }
+  });
+
+  /* Nav item clicks via event delegation */
+  if (leftSidebar) {
+    leftSidebar.addEventListener('click', function (e) {
+      var item = e.target.closest('.nav-menu-item');
+      if (!item || !item.id) return;
+      var idx = parseInt(item.id.replace('nav-', ''), 10);
+      if (!isNaN(idx)) goTo(idx);
+    });
+  }
+
+  /* ══════════════════════════════════════════
+     RENDER LESSON
+  ══════════════════════════════════════════ */
   function renderLesson(idx) {
     var meta = lessonMeta[idx];
     var src  = lessonEls[idx];
-    if (!meta || !src) return;
+    if (!meta) return;
 
-    /* Top section: badge + h1 + meta */
-    lessonCardTop.innerHTML =
-      '<div class="lesson-badge">' + meta.badge + '</div>' +
-      '<h1>' + meta.title + '</h1>' +
-      '<div class="lesson-meta"><span>' + meta.meta.split(' · ').join('</span><span>') + '</span></div>';
+    /* ── Top section: badge + h1 + meta ── */
+    if (lessonCardTop) {
+      lessonCardTop.innerHTML =
+        '<div class="lesson-badge">' + meta.badge + '</div>' +
+        '<h1>' + meta.title + '</h1>' +
+        '<div class="lesson-meta"><span>' +
+          meta.meta.split(' · ').join('</span><span>') +
+        '</span></div>';
+    }
 
-    /* Body: clone lesson inner content, skip badge/h1/meta (first 3 elements) */
-    var clone = src.cloneNode(true);
-    clone.classList.remove('lesson','active');
-    /* Remove the lesson-badge, h1, lesson-meta from top since we rendered them above */
-    var toRemove = clone.querySelectorAll('.lesson-badge, .lesson-meta');
-    toRemove.forEach(function(el){ el.remove(); });
-    var h1 = clone.querySelector('h1');
-    if (h1) h1.remove();
-
-    /* Extract the prose div */
-    var prose = clone.querySelector('.prose');
-    lessonBody.innerHTML = prose ? prose.innerHTML : clone.innerHTML;
+    /* ── Body: clone and strip the top parts ── */
+    if (lessonBody) {
+      if (!src) {
+        lessonBody.innerHTML = '<p style="color:var(--muted);padding:20px;">Contenuto non disponibile.</p>';
+        return;
+      }
+      var clone = src.cloneNode(true);
+      clone.classList.remove('lesson', 'active');
+      clone.querySelectorAll('.lesson-badge, .lesson-meta').forEach(function (n) { n.remove(); });
+      var h1 = clone.querySelector('h1');
+      if (h1) h1.remove();
+      var prose = clone.querySelector('.prose');
+      lessonBody.innerHTML = prose ? prose.innerHTML : clone.innerHTML;
+    }
   }
 
-  /* ── Navigation ── */
+  /* ══════════════════════════════════════════
+     NAVIGATION
+  ══════════════════════════════════════════ */
   function goTo(idx) {
-    /* Deactivate current */
-    var prevNav = document.getElementById('nav-' + current);
+    /* Deactivate previous nav item */
+    var prevNav = el('nav-' + current);
     if (prevNav) prevNav.classList.remove('active');
 
     current = idx;
     renderLesson(idx);
 
-    /* Activate new nav */
-    var nowNav = document.getElementById('nav-' + idx);
+    /* Activate new nav item */
+    var nowNav = el('nav-' + idx);
     if (nowNav) nowNav.classList.add('active');
 
-    /* Update breadcrumb & header title */
+    /* Update header info */
     var num = String(idx + 1).padStart(2, '0');
     if (topTitle) topTitle.textContent = 'lezione-' + num;
-    if (lhTitle)  lhTitle.textContent  = lessonNames[idx];
+    if (lhTitle)  lhTitle.textContent  = lessonNames[idx] || '';
     if (lfLeft)   lfLeft.textContent   = 'Lezione ' + (idx + 1) + ' di ' + total;
 
-    /* Buttons state */
     updateButtons();
     syncProgress();
     if (isMobile()) closeSidebar();
@@ -145,91 +179,106 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function updateButtons() {
-    var isLast = current === total - 1;
-    ['btnPrev','btnPrev2','btnPrev3'].forEach(function(id){
-      var b = document.getElementById(id);
-      if (b) b.disabled = (current === 0);
+    var isFirst = (current === 0);
+    var isLast  = (current === total - 1);
+    ['btnPrev', 'btnPrev2', 'btnPrev3'].forEach(function (id) {
+      var b = el(id);
+      if (b) b.disabled = isFirst;
     });
-    ['btnNext','btnNext2','btnNext3'].forEach(function(id){
-      var b = document.getElementById(id);
-      if (b) b.textContent = isLast ? '🎓 Fine corso' : (id === 'btnNext3' ? 'Prossima lezione →' : (id === 'btnNext' ? 'Prossima →' : 'Avanti →'));
+    ['btnNext', 'btnNext2', 'btnNext3'].forEach(function (id) {
+      var b = el(id);
+      if (!b) return;
+      b.textContent = isLast
+        ? '🎓 Fine corso'
+        : (id === 'btnNext3' ? 'Prossima lezione →' : id === 'btnNext' ? 'Prossima →' : 'Avanti →');
     });
   }
 
   function nextLesson() {
     completed.add(current);
-    var navEl = document.getElementById('nav-' + current);
+    var navEl = el('nav-' + current);
     if (navEl) navEl.classList.add('done');
     syncProgress();
     if (current < total - 1) goTo(current + 1);
   }
-  function prevLesson() { if (current > 0) goTo(current - 1); }
 
-  ['btnPrev','btnPrev2','btnPrev3'].forEach(function(id){
-    var b = document.getElementById(id);
+  function prevLesson() {
+    if (current > 0) goTo(current - 1);
+  }
+
+  ['btnPrev', 'btnPrev2', 'btnPrev3'].forEach(function (id) {
+    var b = el(id);
     if (b) b.addEventListener('click', prevLesson);
   });
-  ['btnNext','btnNext2','btnNext3'].forEach(function(id){
-    var b = document.getElementById(id);
+  ['btnNext', 'btnNext2', 'btnNext3'].forEach(function (id) {
+    var b = el(id);
     if (b) b.addEventListener('click', nextLesson);
   });
 
-  /* ── Nav menu click ── */
-  document.getElementById('leftSidebar').addEventListener('click', function(e){
-    var item = e.target.closest('.nav-menu-item');
-    if (!item || !item.id) return;
-    var idx = parseInt(item.id.replace('nav-',''), 10);
-    if (!isNaN(idx)) goTo(idx);
-  });
-
-  /* ── Progress sync ── */
+  /* ══════════════════════════════════════════
+     PROGRESS SYNC
+  ══════════════════════════════════════════ */
   function syncProgress() {
-    var n = completed.size;
+    var n   = completed.size;
     var pct = Math.round(n / total * 100);
     var pctStr = pct + '%';
+    var labelStr = n + ' / ' + total + ' completate';
 
-    if (sidebarProgressBar)   sidebarProgressBar.style.width   = pctStr;
-    if (sidebarProgressLabel) sidebarProgressLabel.textContent  = n + ' / ' + total + ' completate';
-    if (sidebarProgressPct)   sidebarProgressPct.textContent    = pctStr;
+    /* Sidebar progress bar */
+    if (sidebarProgressBar) sidebarProgressBar.style.width  = pctStr;
+    if (sidebarProgressLbl) sidebarProgressLbl.textContent  = labelStr;
+    if (sidebarProgressPct) sidebarProgressPct.textContent  = pctStr;
 
-    /* Top nav circle */
+    /* Top nav progress circle */
     var deg = pct * 3.6;
     if (progressCircle) {
-      progressCircle.style.background = 'conic-gradient(rgba(255,255,255,.95) ' + deg + 'deg, rgba(255,255,255,.2) ' + deg + 'deg)';
+      progressCircle.style.background =
+        'conic-gradient(rgba(255,255,255,.95) ' + deg + 'deg, rgba(255,255,255,.2) ' + deg + 'deg)';
       progressCircle.textContent = pctStr;
     }
     if (progressPillLabel) progressPillLabel.textContent = n + '/' + total;
 
-    /* Right panel ring */
+    /* Right panel */
     if (rpRing) {
-      rpRing.style.background = 'conic-gradient(var(--accent) ' + deg + 'deg, var(--border) ' + deg + 'deg)';
+      rpRing.style.background =
+        'conic-gradient(var(--accent) ' + deg + 'deg, var(--border) ' + deg + 'deg)';
       rpRing.textContent = pctStr;
     }
-    if (rpProgressBar)   rpProgressBar.style.width      = pctStr;
-    if (rpProgressLabel) rpProgressLabel.textContent    = n + ' / ' + total + ' completate';
-    if (rpCurrentLesson) rpCurrentLesson.textContent    = lessonNames[current];
+    if (rpProgressBar)   rpProgressBar.style.width   = pctStr;
+    if (rpProgressLabel) rpProgressLabel.textContent = labelStr;
+    if (rpCurrentLesson) rpCurrentLesson.textContent = lessonNames[current] || '';
   }
 
-  /* ── Quiz (event delegation — data-correct) ── */
-  document.addEventListener('click', function(e){
+  /* ══════════════════════════════════════════
+     QUIZ — event delegation
+  ══════════════════════════════════════════ */
+  document.addEventListener('click', function (e) {
     var opt = e.target.closest('.quiz-opt');
     if (!opt) return;
     var opts = opt.closest('.quiz-options');
     if (!opts || opts.dataset.answered) return;
     opts.dataset.answered = '1';
+
     var correct = opt.getAttribute('data-correct') === 'true';
     opt.classList.add(correct ? 'correct' : 'wrong');
-    opts.querySelectorAll('.quiz-opt[data-correct="true"]').forEach(function(o){ o.classList.add('correct'); });
+    opts.querySelectorAll('.quiz-opt[data-correct="true"]').forEach(function (o) {
+      o.classList.add('correct');
+    });
+
     var qr = opt.closest('.quiz-box') ? opt.closest('.quiz-box').querySelector('.quiz-result') : null;
     if (qr) {
-      qr.textContent = correct ? '✅ Esatto! Ottimo lavoro.' : '❌ Non corretto. La risposta in verde è quella giusta.';
+      qr.textContent = correct
+        ? '✅ Esatto! Ottimo lavoro.'
+        : '❌ Non corretto. La risposta corretta è evidenziata in verde.';
       qr.classList.add('show');
       qr.style.color = correct ? 'var(--accent2)' : 'var(--accent3)';
     }
   });
 
-  /* ── Widget card clicks (data-goto / data-anchor) ── */
-  document.addEventListener('click', function(e){
+  /* ══════════════════════════════════════════
+     WIDGET CARD CLICKS
+  ══════════════════════════════════════════ */
+  document.addEventListener('click', function (e) {
     var card = e.target.closest('.widget-card[data-goto]');
     if (!card) return;
     var idx    = parseInt(card.getAttribute('data-goto'), 10);
@@ -237,45 +286,74 @@ document.addEventListener('DOMContentLoaded', function () {
     if (isNaN(idx)) return;
     goTo(idx);
     if (anchor) {
-      setTimeout(function(){
-        var el = document.getElementById('anchor-' + anchor);
-        if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+      setTimeout(function () {
+        var anchorEl = el('anchor-' + anchor);
+        if (anchorEl) anchorEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 80);
     }
   });
 
-  /* ── Copy code (event delegation) ── */
-  document.addEventListener('click', function(e){
+  /* ══════════════════════════════════════════
+     COPY CODE — event delegation
+  ══════════════════════════════════════════ */
+  document.addEventListener('click', function (e) {
     var btn = e.target.closest('.code-copy');
     if (!btn) return;
-    var pre = btn.closest('.code-block') ? btn.closest('.code-block').querySelector('pre') : null;
+    var block = btn.closest('.code-block');
+    var pre = block ? block.querySelector('pre') : null;
     if (!pre) return;
-    navigator.clipboard.writeText(pre.innerText).then(function(){
-      btn.textContent = '✓ copiato';
-      setTimeout(function(){ btn.textContent = 'copia'; }, 2000);
-    });
+    var text = pre.innerText || pre.textContent || '';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = '✓ copiato';
+        setTimeout(function () { btn.textContent = 'copia'; }, 2000);
+      }).catch(function () { fallbackCopy(btn, text); });
+    } else {
+      fallbackCopy(btn, text);
+    }
   });
 
-  /* ── Search ── */
-  var searchInput = document.getElementById('searchInput');
+  function fallbackCopy(btn, text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      btn.textContent = '✓ copiato';
+      setTimeout(function () { btn.textContent = 'copia'; }, 2000);
+    } catch (err) {
+      btn.textContent = 'errore';
+    }
+    document.body.removeChild(ta);
+  }
+
+  /* ══════════════════════════════════════════
+     SEARCH
+  ══════════════════════════════════════════ */
+  var searchInput = el('searchInput');
   if (searchInput) {
-    searchInput.addEventListener('keydown', function(e){
-      if (e.key === 'Enter') {
-        var q = searchInput.value.trim().toLowerCase();
-        if (!q) return;
-        for (var i = 0; i < total; i++) {
-          var el = lessonEls[i];
-          if (el && el.textContent.toLowerCase().indexOf(q) !== -1) {
-            goTo(i); searchInput.value = ''; break;
-          }
+    searchInput.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      var q = searchInput.value.trim().toLowerCase();
+      if (!q) return;
+      for (var i = 0; i < total; i++) {
+        var src = lessonEls[i];
+        if (src && src.textContent.toLowerCase().indexOf(q) !== -1) {
+          goTo(i);
+          searchInput.value = '';
+          break;
         }
       }
     });
   }
 
-  /* ── Theme Switcher ── */
-  var themeToggleBtn = document.getElementById('themeToggleBtn');
-  var themeDropdown  = document.getElementById('themeDropdown');
+  /* ══════════════════════════════════════════
+     THEME SWITCHER
+  ══════════════════════════════════════════ */
+  var themeToggleBtn = el('themeToggleBtn');
+  var themeDropdown  = el('themeDropdown');
   var themeOpts      = document.querySelectorAll('.theme-opt');
 
   var THEMES = {
@@ -287,50 +365,49 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   function applyTheme(name) {
+    if (!THEMES[name]) name = 'light';
     document.documentElement.setAttribute('data-theme', name);
-    /* update active state on buttons */
-    themeOpts.forEach(function(btn) {
+    themeOpts.forEach(function (btn) {
       btn.classList.toggle('active', btn.getAttribute('data-theme') === name);
     });
-    /* save to localStorage */
-    try { localStorage.setItem('corso-theme', name); } catch(e) {}
-    /* update toggle button icon */
-    var t = THEMES[name] || THEMES.light;
+    try { localStorage.setItem('corso-theme', name); } catch (err) {}
     if (themeToggleBtn) {
-      themeToggleBtn.querySelector('span').textContent = t.icon + ' ' + t.label;
+      var t = THEMES[name];
+      var span = themeToggleBtn.querySelector('span');
+      if (span) span.textContent = t.icon + ' ' + t.label;
     }
   }
 
-  /* toggle dropdown open/close */
   if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', function(e) {
+    themeToggleBtn.addEventListener('click', function (e) {
       e.stopPropagation();
-      themeDropdown.classList.toggle('open');
+      if (themeDropdown) themeDropdown.classList.toggle('open');
     });
   }
 
-  /* close dropdown when clicking outside */
-  document.addEventListener('click', function(e) {
-    if (themeDropdown && !themeDropdown.contains(e.target) &&
-        themeToggleBtn && !themeToggleBtn.contains(e.target)) {
-      themeDropdown.classList.remove('open');
-    }
+  document.addEventListener('click', function (e) {
+    if (!themeDropdown) return;
+    var clickedInside = (themeDropdown.contains(e.target)) ||
+                        (themeToggleBtn && themeToggleBtn.contains(e.target));
+    if (!clickedInside) themeDropdown.classList.remove('open');
   });
 
-  /* theme option click */
-  themeOpts.forEach(function(btn) {
-    btn.addEventListener('click', function() {
+  themeOpts.forEach(function (btn) {
+    btn.addEventListener('click', function () {
       applyTheme(btn.getAttribute('data-theme'));
-      themeDropdown.classList.remove('open');
+      if (themeDropdown) themeDropdown.classList.remove('open');
     });
   });
 
-  /* restore saved theme or default to light */
+  /* Restore saved theme */
   var savedTheme = 'light';
-  try { savedTheme = localStorage.getItem('corso-theme') || 'light'; } catch(e) {}
+  try { savedTheme = localStorage.getItem('corso-theme') || 'light'; } catch (err) {}
   applyTheme(savedTheme);
 
-  /* ── Init ── */
+  /* ══════════════════════════════════════════
+     INIT
+  ══════════════════════════════════════════ */
   goTo(0);
   syncProgress();
-});
+
+}); /* end DOMContentLoaded */

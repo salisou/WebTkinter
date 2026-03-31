@@ -115,9 +115,9 @@
         <div class="profile-bio">Python 3 · GUI · SQLite · Canvas · ttk · OOP</div>
       </div>
       <div class="profile-stats">
-        <div class="stat-box"><div class="stat-num">14</div><div class="stat-lbl">Lezioni</div></div>
-        <div class="stat-box"><div class="stat-num">80</div><div class="stat-lbl">Quiz</div></div>
-        <div class="stat-box"><div class="stat-num">3</div><div class="stat-lbl">Progetti</div></div>
+        <div class="stat-box"><div class="stat-num">15</div><div class="stat-lbl">Lezioni</div></div>
+        <div class="stat-box"><div class="stat-num">95</div><div class="stat-lbl">Quiz</div></div>
+        <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl">Progetti</div></div>
       </div>
     </div><!-- /sidebar-profile -->
 
@@ -149,6 +149,7 @@
         <div class="nav-menu-title">Esperto</div>
         <div class="nav-menu-item" id="nav-12"><div class="nav-icon ni-purple">🖥️</div>Tkinter Avanzato<span class="nav-num">13</span></div>
         <div class="nav-menu-item" id="nav-13"><div class="nav-icon ni-blue">🗃️</div>SQL Server & Python<span class="nav-num">14</span></div>
+        <div class="nav-menu-item" id="nav-14"><div class="nav-icon ni-orange">📊</div>Grafica & Matplotlib<span class="nav-num">15</span></div>
       </div>
 
       <div class="sidebar-progress">
@@ -3219,6 +3220,641 @@ cur.execute("SELECT * FROM Utenti WHERE Nome = '" + nome + "'")</pre>
             <div class="quiz-opt" data-correct="false"><span class="opt-key">D</span> Riavvia la transazione</div>
           </div>
           <div class="quiz-result" id="qr-13d"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== LEZIONE 14: GRAFICA & MATPLOTLIB ===== -->
+    <div class="lesson" id="lesson-14">
+      <div class="lesson-badge">📊 Lezione 15 · Grafica</div>
+      <h1>Grafica & <span class="highlight">Matplotlib</span> con Tkinter</h1>
+      <div class="lesson-meta"><span>~60 min</span><span>Esperto</span><span>Matplotlib · NumPy · Tkinter</span></div>
+      <div class="prose">
+
+        <h2>Cos'è Matplotlib?</h2>
+        <p><strong>Matplotlib</strong> è la libreria di visualizzazione dati più usata in Python. Permette di creare grafici a linee, barre, torta, scatter, istogrammi, e molto altro. Integrata con Tkinter, puoi costruire <strong>dashboard desktop professionali</strong> come quella in figura.</p>
+
+        <div class="callout callout-info">
+          <span class="callout-label">ℹ️ Installazione</span>
+          <code>pip install matplotlib numpy</code> — NumPy è necessario per generare dati numerici efficientemente.
+        </div>
+
+        <h2>Integrare Matplotlib in Tkinter</h2>
+        <p>Matplotlib include un backend <strong>TkAgg</strong> che permette di incorporare grafici direttamente in una finestra Tkinter tramite <code>FigureCanvasTkAgg</code>:</p>
+
+        <div class="code-block">
+          <div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span>grafico_base.py</span><button class="code-copy">copia</button></div>
+          <pre><span class="kw">import</span> tkinter <span class="kw">as</span> tk
+<span class="kw">from</span> tkinter <span class="kw">import</span> ttk
+<span class="kw">import</span> matplotlib
+matplotlib.<span class="fn">use</span>(<span class="str">'TkAgg'</span>)                    <span class="cm"># backend Tkinter</span>
+<span class="kw">from</span> matplotlib.figure <span class="kw">import</span> <span class="cls">Figure</span>
+<span class="kw">from</span> matplotlib.backends.backend_tkagg <span class="kw">import</span> (
+    <span class="cls">FigureCanvasTkAgg</span>,
+    <span class="cls">NavigationToolbar2Tk</span>              <span class="cm"># toolbar zoom/pan integrata</span>
+)
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+root = tk.<span class="cls">Tk</span>()
+root.<span class="fn">title</span>(<span class="str">"Grafico Tkinter"</span>)
+root.<span class="fn">geometry</span>(<span class="str">"900x600"</span>)
+root.<span class="fn">configure</span>(bg=<span class="str">"#1e1e2e"</span>)
+
+<span class="cm"># 1. Crea la Figure Matplotlib</span>
+fig = <span class="cls">Figure</span>(figsize=(<span class="num">9</span>, <span class="num">5</span>), dpi=<span class="num">100</span>,
+              facecolor=<span class="str">"#1e1e2e"</span>)
+ax = fig.<span class="fn">add_subplot</span>(<span class="num">111</span>)
+ax.<span class="fn">set_facecolor</span>(<span class="str">"#181825"</span>)
+
+<span class="cm"># 2. Disegna il grafico</span>
+x = np.<span class="fn">linspace</span>(<span class="num">0</span>, <span class="num">10</span>, <span class="num">200</span>)
+ax.<span class="fn">plot</span>(x, np.<span class="fn">sin</span>(x), color=<span class="str">"#89b4fa"</span>, linewidth=<span class="num">2</span>, label=<span class="str">"sin(x)"</span>)
+ax.<span class="fn">plot</span>(x, np.<span class="fn">cos</span>(x), color=<span class="str">"#a6e3a1"</span>, linewidth=<span class="num">2</span>, label=<span class="str">"cos(x)"</span>)
+ax.<span class="fn">set_title</span>(<span class="str">"Funzioni Trigonometriche"</span>, color=<span class="str">"#cdd6f4"</span>)
+ax.<span class="fn">set_xlabel</span>(<span class="str">"x"</span>, color=<span class="str">"#a6adc8"</span>)
+ax.<span class="fn">set_ylabel</span>(<span class="str">"y"</span>, color=<span class="str">"#a6adc8"</span>)
+ax.<span class="fn">tick_params</span>(colors=<span class="str">"#a6adc8"</span>)
+ax.<span class="fn">legend</span>(facecolor=<span class="str">"#313244"</span>, labelcolor=<span class="str">"#cdd6f4"</span>)
+ax.<span class="fn">grid</span>(alpha=<span class="num">0.2</span>, color=<span class="str">"#45475a"</span>)
+
+<span class="cm"># 3. Embedding in Tkinter</span>
+canvas = <span class="cls">FigureCanvasTkAgg</span>(fig, master=root)
+canvas.<span class="fn">draw</span>()
+canvas.<span class="fn">get_tk_widget</span>().<span class="fn">pack</span>(fill=<span class="str">"both"</span>, expand=<span class="kw">True</span>)
+
+<span class="cm"># 4. Toolbar opzionale (zoom, pan, salva)</span>
+toolbar = <span class="cls">NavigationToolbar2Tk</span>(canvas, root)
+toolbar.<span class="fn">update</span>()
+
+root.<span class="fn">mainloop</span>()</pre>
+        </div>
+
+        <h2>Tutti i tipi di grafico principali</h2>
+
+        <h3>📈 Grafico a Linee con dati reali</h3>
+        <div class="code-block">
+          <div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span>linee.py</span><button class="code-copy">copia</button></div>
+          <pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># Dati vendite mensili (Gen → Dic)</span>
+mesi = [<span class="str">'Gen'</span>,<span class="str">'Feb'</span>,<span class="str">'Mar'</span>,<span class="str">'Apr'</span>,<span class="str">'Mag'</span>,<span class="str">'Giu'</span>,
+        <span class="str">'Lug'</span>,<span class="str">'Ago'</span>,<span class="str">'Set'</span>,<span class="str">'Ott'</span>,<span class="str">'Nov'</span>,<span class="str">'Dic'</span>]
+vendite_A = [<span class="num">120</span>,<span class="num">135</span>,<span class="num">148</span>,<span class="num">162</span>,<span class="num">155</span>,<span class="num">170</span>,
+             <span class="num">180</span>,<span class="num">165</span>,<span class="num">175</span>,<span class="num">190</span>,<span class="num">210</span>,<span class="num">225</span>]
+vendite_B = [<span class="num">95</span>, <span class="num">102</span>,<span class="num">118</span>,<span class="num">125</span>,<span class="num">140</span>,<span class="num">138</span>,
+             <span class="num">152</span>,<span class="num">160</span>,<span class="num">158</span>,<span class="num">172</span>,<span class="num">185</span>,<span class="num">195</span>]
+
+ax.<span class="fn">plot</span>(mesi, vendite_A, <span class="str">'o-'</span>, color=<span class="str">"#89b4fa"</span>,
+        linewidth=<span class="num">2</span>, markersize=<span class="num">5</span>, label=<span class="str">"Prodotto A"</span>)
+ax.<span class="fn">plot</span>(mesi, vendite_B, <span class="str">'s-'</span>, color=<span class="str">"#a6e3a1"</span>,
+        linewidth=<span class="num">2</span>, markersize=<span class="num">5</span>, label=<span class="str">"Prodotto B"</span>)
+
+<span class="cm"># Area riempita sotto la curva</span>
+ax.<span class="fn">fill_between</span>(mesi, vendite_A, alpha=<span class="num">0.1</span>, color=<span class="str">"#89b4fa"</span>)
+
+ax.<span class="fn">set_title</span>(<span class="str">"Trend Vendite Mensili"</span>, color=<span class="str">"#cdd6f4"</span>, fontsize=<span class="num">14</span>)
+ax.<span class="fn">set_xlabel</span>(<span class="str">"Mese"</span>, color=<span class="str">"#a6adc8"</span>)
+ax.<span class="fn">set_ylabel</span>(<span class="str">"Vendite (k€)"</span>, color=<span class="str">"#a6adc8"</span>)
+ax.<span class="fn">legend</span>()
+ax.<span class="fn">grid</span>(axis=<span class="str">"y"</span>, alpha=<span class="num">0.2</span>)</pre>
+        </div>
+
+        <h3>📊 Grafico a Barre</h3>
+        <div class="code-block">
+          <div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span>barre.py</span><button class="code-copy">copia</button></div>
+          <pre>reparti  = [<span class="str">'Nord'</span>, <span class="str">'Sud'</span>, <span class="str">'Est'</span>, <span class="str">'Ovest'</span>, <span class="str">'Centro'</span>]
+fatturato = [<span class="num">340</span>, <span class="num">210</span>, <span class="num">180</span>, <span class="num">420</span>, <span class="num">290</span>]
+obiettivo = [<span class="num">300</span>, <span class="num">250</span>, <span class="num">200</span>, <span class="num">380</span>, <span class="num">310</span>]
+
+x = np.<span class="fn">arange</span>(<span class="fn">len</span>(reparti))
+w = <span class="num">0.35</span>                                  <span class="cm"># larghezza barra</span>
+
+bars1 = ax.<span class="fn">bar</span>(x - w/<span class="num">2</span>, fatturato, w,
+               label=<span class="str">"Reale"</span>, color=<span class="str">"#89b4fa"</span>)
+bars2 = ax.<span class="fn">bar</span>(x + w/<span class="num">2</span>, obiettivo, w,
+               label=<span class="str">"Obiettivo"</span>, color=<span class="str">"#313244"</span>)
+
+<span class="cm"># Etichette sopra le barre</span>
+ax.<span class="fn">bar_label</span>(bars1, fmt=<span class="str">'%dk'</span>, color=<span class="str">"#cdd6f4"</span>, fontsize=<span class="num">8</span>)
+
+ax.<span class="fn">set_xticks</span>(x)
+ax.<span class="fn">set_xticklabels</span>(reparti)
+ax.<span class="fn">set_title</span>(<span class="str">"Fatturato vs Obiettivo (k€)"</span>)</pre>
+        </div>
+
+        <h3>🥧 Grafico a Torta (Donut)</h3>
+        <div class="code-block">
+          <div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span>torta.py</span><button class="code-copy">copia</button></div>
+          <pre>settori = [<span class="str">'Tech'</span>, <span class="str">'Finance'</span>, <span class="str">'Health'</span>, <span class="str">'Energy'</span>, <span class="str">'Retail'</span>]
+quote   = [<span class="num">35</span>, <span class="num">20</span>, <span class="num">18</span>, <span class="num">15</span>, <span class="num">12</span>]
+colori  = [<span class="str">'#89b4fa'</span>, <span class="str">'#a6e3a1'</span>, <span class="str">'#f38ba8'</span>, <span class="str">'#fab387'</span>, <span class="str">'#94e2d5'</span>]
+
+wedges, texts, autotexts = ax.<span class="fn">pie</span>(
+    quote,
+    labels=settori,
+    colors=colori,
+    autopct=<span class="str">'%1.0f%%'</span>,
+    pctdistance=<span class="num">0.75</span>,
+    startangle=<span class="num">90</span>,
+    wedgeprops=<span class="fn">dict</span>(width=<span class="num">0.6</span>,       <span class="cm"># crea effetto donut</span>
+                    edgecolor=<span class="str">'#1e1e2e'</span>,
+                    linewidth=<span class="num">2</span>)
+)
+
+<span class="cm"># Stile testi</span>
+<span class="kw">for</span> text <span class="kw">in</span> texts:
+    text.<span class="fn">set_color</span>(<span class="str">"#cdd6f4"</span>)
+<span class="kw">for</span> autotext <span class="kw">in</span> autotexts:
+    autotext.<span class="fn">set_color</span>(<span class="str">"#1e1e2e"</span>)
+    autotext.<span class="fn">set_fontweight</span>(<span class="str">"bold"</span>)
+
+ax.<span class="fn">set_title</span>(<span class="str">"Quote di Mercato"</span>, color=<span class="str">"#cdd6f4"</span>)</pre>
+        </div>
+
+        <h3>⚡ Scatter Plot</h3>
+        <div class="code-block">
+          <div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span>scatter.py</span><button class="code-copy">copia</button></div>
+          <pre>np.random.<span class="fn">seed</span>(<span class="num">42</span>)
+n = <span class="num">150</span>
+investimento = np.random.<span class="fn">uniform</span>(<span class="num">0</span>, <span class="num">100</span>, n)
+profitto     = investimento * <span class="num">0.8</span> + np.random.<span class="fn">normal</span>(<span class="num">0</span>, <span class="num">12</span>, n)
+colori_pts   = np.random.<span class="fn">uniform</span>(<span class="num">0</span>, <span class="num">1</span>, n)   <span class="cm"># colore per categoria</span>
+dimensioni   = np.random.<span class="fn">uniform</span>(<span class="num">20</span>, <span class="num">200</span>, n)  <span class="cm"># dimensione punto</span>
+
+scatter = ax.<span class="fn">scatter</span>(
+    investimento, profitto,
+    c=colori_pts,          <span class="cm"># colore da array (colormap automatica)</span>
+    s=dimensioni,          <span class="cm"># dimensione punti</span>
+    cmap=<span class="str">'plasma'</span>,
+    alpha=<span class="num">0.7</span>,
+    edgecolors=<span class="str">'none'</span>
+)
+
+<span class="cm"># Linea di regressione</span>
+z = np.<span class="fn">polyfit</span>(investimento, profitto, <span class="num">1</span>)
+p = np.<span class="fn">poly1d</span>(z)
+x_line = np.<span class="fn">linspace</span>(investimento.<span class="fn">min</span>(), investimento.<span class="fn">max</span>(), <span class="num">100</span>)
+ax.<span class="fn">plot</span>(x_line, <span class="fn">p</span>(x_line), <span class="str">'--'</span>, color=<span class="str">"#f9e2af"</span>, linewidth=<span class="num">2</span>)
+
+ax.<span class="fn">set_title</span>(<span class="str">"Investimento vs Profitto"</span>)
+ax.<span class="fn">set_xlabel</span>(<span class="str">"Investimento (k€)"</span>)
+ax.<span class="fn">set_ylabel</span>(<span class="str">"Profitto (k€)"</span>)
+fig.<span class="fn">colorbar</span>(scatter, ax=ax, label=<span class="str">"Categoria"</span>)</pre>
+        </div>
+
+        <h3>📉 Istogramma</h3>
+        <div class="code-block">
+          <div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span>istogramma.py</span><button class="code-copy">copia</button></div>
+          <pre">np.random.<span class="fn">seed</span>(<span class="num">0</span>)
+valutazioni = np.random.<span class="fn">normal</span>(loc=<span class="num">7.2</span>, scale=<span class="num">1.5</span>, size=<span class="num">500</span>)
+valutazioni = np.<span class="fn">clip</span>(valutazioni, <span class="num">0</span>, <span class="num">10</span>)
+
+n, bins, patches = ax.<span class="fn">hist</span>(
+    valutazioni, bins=<span class="num">20</span>, color=<span class="str">"#cba6f7"</span>,
+    edgecolor=<span class="str">"#1e1e2e"</span>, alpha=<span class="num">0.85</span>
+)
+
+<span class="cm"># Linee statistiche</span>
+media   = valutazioni.<span class="fn">mean</span>()
+mediana = np.<span class="fn">median</span>(valutazioni)
+ax.<span class="fn">axvline</span>(media,   color=<span class="str">"#f38ba8"</span>, linestyle=<span class="str">"--"</span>,
+           linewidth=<span class="num">2</span>, label=<span class="str">f"Media {media:.1f}"</span>)
+ax.<span class="fn">axvline</span>(mediana, color=<span class="str">"#a6e3a1"</span>, linestyle=<span class="str">":"</span>,
+           linewidth=<span class="num">2</span>, label=<span class="str">f"Mediana {mediana:.1f}"</span>)
+
+ax.<span class="fn">set_title</span>(<span class="str">"Soddisfazione Clienti (0-10)"</span>)
+ax.<span class="fn">set_xlabel</span>(<span class="str">"Punteggio"</span>)
+ax.<span class="fn">set_ylabel</span>(<span class="str">"N. Clienti"</span>)
+ax.<span class="fn">legend</span>()</pre>
+        </div>
+
+        <h3>🌊 Area Chart (multi-canale)</h3>
+        <div class="code-block">
+          <div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span>area.py</span><button class="code-copy">copia</button></div>
+          <pre">t = np.<span class="fn">linspace</span>(<span class="num">0</span>, <span class="num">4</span> * np.pi, <span class="num">300</span>)
+A = <span class="num">0.5</span> + <span class="num">0.5</span> * np.<span class="fn">sin</span>(t * <span class="num">0.8</span>)
+B = <span class="num">0.5</span> + <span class="num">0.5</span> * np.<span class="fn">sin</span>(t * <span class="num">0.8</span> + np.pi / <span class="num">3</span>)
+C = <span class="num">0.5</span> + <span class="num">0.5</span> * np.<span class="fn">sin</span>(t * <span class="num">0.8</span> + <span class="num">2</span> * np.pi / <span class="num">3</span>)
+
+ax.<span class="fn">stackplot</span>(t, A, B, C,
+             labels=[<span class="str">'A'</span>, <span class="str">'B'</span>, <span class="str">'C'</span>],
+             colors=[<span class="str">'#89b4fa'</span>, <span class="str">'#94e2d5'</span>, <span class="str">'#a6adc8'</span>],
+             alpha=<span class="num">0.8</span>)
+ax.<span class="fn">set_xlim</span>(<span class="num">0</span>, t.<span class="fn">max</span>())
+ax.<span class="fn">set_ylim</span>(<span class="num">0</span>)
+ax.<span class="fn">set_title</span>(<span class="str">"Segnale Multi-canale"</span>)
+ax.<span class="fn">legend</span>(loc=<span class="str">"upper right"</span>)</pre>
+        </div>
+
+        <h2>Dashboard completa — Tkinter + Matplotlib</h2>
+        <p>Costruiamo la <strong>dashboard professionale</strong> visibile in figura: 6 grafici in un layout a griglia con sidebar di navigazione, tema scuro e aggiornamento dinamico.</p>
+
+        <div class="code-block">
+          <div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span>dashboard.py — completo</span><button class="code-copy">copia</button></div>
+          <pre><span class="kw">import</span> tkinter <span class="kw">as</span> tk
+<span class="kw">from</span> tkinter <span class="kw">import</span> ttk
+<span class="kw">import</span> matplotlib
+matplotlib.<span class="fn">use</span>(<span class="str">'TkAgg'</span>)
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+<span class="kw">from</span> matplotlib.figure <span class="kw">import</span> <span class="cls">Figure</span>
+<span class="kw">from</span> matplotlib.backends.backend_tkagg <span class="kw">import</span> <span class="cls">FigureCanvasTkAgg</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># ── Palette colori ──────────────────────────────</span>
+BG      = <span class="str">"#0d0d0d"</span>
+SURFACE = <span class="str">"#1a1a1a"</span>
+SIDEBAR = <span class="str">"#111111"</span>
+ACCENT  = <span class="str">"#00bcd4"</span>
+TEXT    = <span class="str">"#e0e0e0"</span>
+MUTED   = <span class="str">"#555555"</span>
+COLORS  = [<span class="str">"#00bcd4"</span>,<span class="str">"#4caf50"</span>,<span class="str">"#ff9800"</span>,<span class="str">"#e91e63"</span>,<span class="str">"#9c27b0"</span>]
+
+plt.<span class="fn">rcParams</span>.<span class="fn">update</span>({
+    <span class="str">"figure.facecolor"</span>: SURFACE,
+    <span class="str">"axes.facecolor"</span>:   <span class="str">"#141414"</span>,
+    <span class="str">"axes.edgecolor"</span>:   <span class="str">"#333"</span>,
+    <span class="str">"axes.labelcolor"</span>:  MUTED,
+    <span class="str">"text.color"</span>:       TEXT,
+    <span class="str">"xtick.color"</span>:      MUTED,
+    <span class="str">"ytick.color"</span>:      MUTED,
+    <span class="str">"grid.color"</span>:       <span class="str">"#222"</span>,
+    <span class="str">"grid.alpha"</span>:       <span class="num">0.5</span>,
+    <span class="str">"font.family"</span>:      <span class="str">"sans-serif"</span>,
+    <span class="str">"font.size"</span>:        <span class="num">9</span>,
+})
+
+<span class="kw">class</span> <span class="cls">Dashboard</span>(tk.<span class="cls">Tk</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(self):
+        <span class="fn">super()</span>.<span class="fn">__init__</span>()
+        self.<span class="fn">title</span>(<span class="str">"Dashboard Matplotlib – Tkinter Desktop App"</span>)
+        self.<span class="fn">configure</span>(bg=BG)
+        self.<span class="fn">state</span>(<span class="str">"zoomed"</span>)            <span class="cm"># finestra massimizzata</span>
+        self.vista_corrente = tk.<span class="cls">StringVar</span>(value=<span class="str">"Dashboard"</span>)
+        self.<span class="fn">_build_layout</span>()
+        self.<span class="fn">_show_view</span>(<span class="str">"Dashboard"</span>)
+
+    <span class="cm"># ── Layout principale ────────────────────────</span>
+    <span class="kw">def</span> <span class="fn">_build_layout</span>(self):
+        <span class="cm"># Sidebar sinistra</span>
+        self.sidebar = tk.<span class="cls">Frame</span>(self, bg=SIDEBAR, width=<span class="num">180</span>)
+        self.sidebar.<span class="fn">pack</span>(side=<span class="str">"left"</span>, fill=<span class="str">"y"</span>)
+        self.sidebar.<span class="fn">pack_propagate</span>(<span class="kw">False</span>)
+
+        <span class="cm"># Logo</span>
+        tk.<span class="cls">Label</span>(self.sidebar, text=<span class="str">"◆"</span>, fg=ACCENT, bg=SIDEBAR,
+                font=(<span class="str">"Arial"</span>, <span class="num">24</span>)).<span class="fn">pack</span>(pady=(<span class="num">20</span>,<span class="num">4</span>))
+        tk.<span class="cls">Label</span>(self.sidebar, text=<span class="str">"DATA DASH"</span>, fg=TEXT, bg=SIDEBAR,
+                font=(<span class="str">"Arial"</span>, <span class="num">13</span>, <span class="str">"bold"</span>)).<span class="fn">pack</span>()
+        tk.<span class="cls">Label</span>(self.sidebar, text=<span class="str">"Matplotlib + Tkinter"</span>,
+                fg=MUTED, bg=SIDEBAR, font=(<span class="str">"Arial"</span>, <span class="num">8</span>)).<span class="fn">pack</span>(pady=(<span class="num">0</span>,<span class="num">16</span>))
+
+        <span class="cm"># Separatore</span>
+        tk.<span class="cls">Frame</span>(self.sidebar, bg=<span class="str">"#222"</span>, height=<span class="num">1</span>).<span class="fn">pack</span>(fill=<span class="str">"x"</span>, padx=<span class="num">16</span>)
+
+        <span class="cm"># Voci di navigazione</span>
+        tk.<span class="cls">Label</span>(self.sidebar, text=<span class="str">"GRAFICI"</span>, fg=MUTED, bg=SIDEBAR,
+                font=(<span class="str">"Arial"</span>, <span class="num">8</span>), anchor=<span class="str">"w"</span>).<span class="fn">pack</span>(
+                fill=<span class="str">"x"</span>, padx=<span class="num">16</span>, pady=(<span class="num">16</span>,<span class="num">4</span>))
+
+        self.nav_buttons = {}
+        voci = [
+            (<span class="str">"■"</span>, <span class="str">"Dashboard"</span>),
+            (<span class="str">"—"</span>, <span class="str">"Linee"</span>),
+            (<span class="str">"▮"</span>, <span class="str">"Barre"</span>),
+            (<span class="str">"●"</span>, <span class="str">"Torta"</span>),
+            (<span class="str">"·"</span>, <span class="str">"Scatter"</span>),
+            (<span class="str">"▒"</span>, <span class="str">"Istogramma"</span>),
+            (<span class="str">"~"</span>, <span class="str">"Area"</span>),
+        ]
+        <span class="kw">for</span> icona, nome <span class="kw">in</span> voci:
+            btn = tk.<span class="cls">Button</span>(
+                self.sidebar, text=<span class="str">f"  {icona}  {nome}"</span>,
+                fg=TEXT, bg=SIDEBAR, activebackground=<span class="str">"#1e1e1e"</span>,
+                activeforeground=ACCENT, relief=<span class="str">"flat"</span>,
+                font=(<span class="str">"Arial"</span>, <span class="num">11</span>), anchor=<span class="str">"w"</span>,
+                command=<span class="kw">lambda</span> n=nome: self.<span class="fn">_show_view</span>(n)
+            )
+            btn.<span class="fn">pack</span>(fill=<span class="str">"x"</span>, padx=<span class="num">8</span>, pady=<span class="num">1</span>)
+            self.nav_buttons[nome] = btn
+
+        <span class="cm"># Versione</span>
+        tk.<span class="cls">Label</span>(self.sidebar, text=<span class="str">"v2.0 • matplotlib"</span>,
+                fg=MUTED, bg=SIDEBAR, font=(<span class="str">"Arial"</span>, <span class="num">7</span>)).<span class="fn">pack</span>(
+                side=<span class="str">"bottom"</span>, pady=<span class="num">10</span>)
+
+        <span class="cm"># Area principale</span>
+        self.main = tk.<span class="cls">Frame</span>(self, bg=BG)
+        self.main.<span class="fn">pack</span>(side=<span class="str">"right"</span>, fill=<span class="str">"both"</span>, expand=<span class="kw">True</span>)
+
+        <span class="cm"># Header</span>
+        header = tk.<span class="cls">Frame</span>(self.main, bg=BG)
+        header.<span class="fn">pack</span>(fill=<span class="str">"x"</span>, padx=<span class="num">20</span>, pady=<span class="num">12</span>)
+        self.title_lbl = tk.<span class="cls">Label</span>(header, text=<span class="str">"Dashboard"</span>,
+            fg=TEXT, bg=BG, font=(<span class="str">"Arial"</span>, <span class="num">20</span>, <span class="str">"bold"</span>))
+        self.title_lbl.<span class="fn">pack</span>(side=<span class="str">"left"</span>)
+
+        <span class="cm"># Badge librerie</span>
+        <span class="kw">for</span> lib <span class="kw">in</span> [<span class="str">"Matplotlib"</span>, <span class="str">"NumPy"</span>, <span class="str">"Tkinter"</span>]:
+            tk.<span class="cls">Label</span>(header, text=lib, fg=ACCENT, bg=BG,
+                    font=(<span class="str">"Arial"</span>, <span class="num">8</span>)).<span class="fn">pack</span>(side=<span class="str">"right"</span>, padx=<span class="num">4</span>)
+
+        <span class="cm"># Canvas container</span>
+        self.canvas_frame = tk.<span class="cls">Frame</span>(self.main, bg=BG)
+        self.canvas_frame.<span class="fn">pack</span>(fill=<span class="str">"both"</span>, expand=<span class="kw">True</span>, padx=<span class="num">10</span>)
+
+    <span class="cm"># ── Navigazione ─────────────────────────────</span>
+    <span class="kw">def</span> <span class="fn">_show_view</span>(self, nome):
+        <span class="cm"># Evidenzia bottone attivo</span>
+        <span class="kw">for</span> n, btn <span class="kw">in</span> self.nav_buttons.<span class="fn">items</span>():
+            btn.<span class="fn">config</span>(bg=<span class="str">"#1e1e1e"</span> <span class="kw">if</span> n==nome <span class="kw">else</span> SIDEBAR,
+                       fg=ACCENT <span class="kw">if</span> n==nome <span class="kw">else</span> TEXT)
+        self.title_lbl.<span class="fn">config</span>(text=nome)
+
+        <span class="cm"># Pulisce canvas precedente</span>
+        <span class="kw">for</span> w <span class="kw">in</span> self.canvas_frame.<span class="fn">winfo_children</span>():
+            w.<span class="fn">destroy</span>()
+
+        <span class="cm"># Costruisce il grafico</span>
+        metodo = <span class="fn">getattr</span>(self, <span class="str">f"_view_{nome.lower()}"</span>, self._view_dashboard)
+        fig = <span class="fn">metodo</span>()
+
+        canvas = <span class="cls">FigureCanvasTkAgg</span>(fig, master=self.canvas_frame)
+        canvas.<span class="fn">draw</span>()
+        canvas.<span class="fn">get_tk_widget</span>().<span class="fn">pack</span>(fill=<span class="str">"both"</span>, expand=<span class="kw">True</span>)
+
+    <span class="cm"># ── Vista Dashboard (6 grafici) ──────────────</span>
+    <span class="kw">def</span> <span class="fn">_view_dashboard</span>(self):
+        fig, axes = plt.<span class="fn">subplots</span>(<span class="num">3</span>, <span class="num">2</span>, figsize=(<span class="num">14</span>, <span class="num">9</span>))
+        fig.<span class="fn">tight_layout</span>(pad=<span class="num">3.0</span>)
+        np.random.<span class="fn">seed</span>(<span class="num">42</span>)
+        mesi = [<span class="str">'Gen'</span>,<span class="str">'Mar'</span>,<span class="str">'Mag'</span>,<span class="str">'Lug'</span>,<span class="str">'Set'</span>,<span class="str">'Nov'</span>]
+
+        <span class="cm"># Linee</span>
+        ax = axes[<span class="num">0</span>][<span class="num">0</span>]
+        <span class="kw">for</span> i, c <span class="kw">in</span> <span class="fn">enumerate</span>(COLORS[:<span class="num">3</span>]):
+            ax.<span class="fn">plot</span>(mesi, np.random.<span class="fn">randint</span>(<span class="num">80</span>,<span class="num">200</span>,<span class="num">6</span>), <span class="str">'o-'</span>,
+                   color=c, label=<span class="fn">chr</span>(<span class="num">65</span>+i), linewidth=<span class="num">1.8</span>)
+        ax.<span class="fn">set_title</span>(<span class="str">"Trend Vendite Mensili"</span>); ax.<span class="fn">legend</span>(); ax.<span class="fn">grid</span>(<span class="kw">True</span>)
+
+        <span class="cm"># Barre</span>
+        ax = axes[<span class="num">0</span>][<span class="num">1</span>]
+        reg = [<span class="str">'Nord'</span>,<span class="str">'Sud'</span>,<span class="str">'Est'</span>,<span class="str">'Ovest'</span>,<span class="str">'Centro'</span>]
+        fat = [<span class="num">340</span>,<span class="num">210</span>,<span class="num">180</span>,<span class="num">420</span>,<span class="num">290</span>]; obj = [<span class="num">300</span>,<span class="num">250</span>,<span class="num">200</span>,<span class="num">380</span>,<span class="num">310</span>]
+        x = np.<span class="fn">arange</span>(<span class="num">5</span>); w=<span class="num">0.35</span>
+        ax.<span class="fn">bar</span>(x-w/<span class="num">2</span>, fat, w, color=ACCENT, label=<span class="str">"Reale"</span>)
+        ax.<span class="fn">bar</span>(x+w/<span class="num">2</span>, obj, w, color=<span class="str">"#333"</span>, label=<span class="str">"Obiettivo"</span>)
+        ax.<span class="fn">set_xticks</span>(x); ax.<span class="fn">set_xticklabels</span>(reg)
+        ax.<span class="fn">set_title</span>(<span class="str">"Fatturato vs Obiettivo (k€)"</span>); ax.<span class="fn">legend</span>()
+
+        <span class="cm"># Torta donut</span>
+        ax = axes[<span class="num">1</span>][<span class="num">0</span>]
+        ax.<span class="fn">pie</span>([<span class="num">35</span>,<span class="num">20</span>,<span class="num">18</span>,<span class="num">15</span>,<span class="num">12</span>],
+              labels=[<span class="str">'Tech'</span>,<span class="str">'Finance'</span>,<span class="str">'Health'</span>,<span class="str">'Energy'</span>,<span class="str">'Retail'</span>],
+              colors=COLORS, autopct=<span class="str">'%1.0f%%'</span>,
+              wedgeprops=<span class="fn">dict</span>(width=<span class="num">0.6</span>, edgecolor=SURFACE, linewidth=<span class="num">2</span>))
+        ax.<span class="fn">set_title</span>(<span class="str">"Quote di Mercato"</span>)
+
+        <span class="cm"># Scatter</span>
+        ax = axes[<span class="num">1</span>][<span class="num">1</span>]
+        inv = np.random.<span class="fn">uniform</span>(<span class="num">0</span>,<span class="num">100</span>,<span class="num">150</span>)
+        pro = inv * <span class="num">0.8</span> + np.random.<span class="fn">normal</span>(<span class="num">0</span>,<span class="num">12</span>,<span class="num">150</span>)
+        sc = ax.<span class="fn">scatter</span>(inv, pro, c=np.random.<span class="fn">rand</span>(<span class="num">150</span>),
+                        s=np.random.<span class="fn">uniform</span>(<span class="num">20</span>,<span class="num">200</span>,<span class="num">150</span>),
+                        cmap=<span class="str">'plasma'</span>, alpha=<span class="num">0.7</span>)
+        z=np.<span class="fn">polyfit</span>(inv,pro,<span class="num">1</span>); p=np.<span class="fn">poly1d</span>(z)
+        ax.<span class="fn">plot</span>(np.<span class="fn">sort</span>(inv), <span class="fn">p</span>(np.<span class="fn">sort</span>(inv)), <span class="str">'--'</span>, color=<span class="str">"#f9e2af"</span>, lw=<span class="num">2</span>)
+        ax.<span class="fn">set_title</span>(<span class="str">"Investimento vs Profitto"</span>)
+        fig.<span class="fn">colorbar</span>(sc, ax=ax)
+
+        <span class="cm"># Istogramma</span>
+        ax = axes[<span class="num">2</span>][<span class="num">0</span>]
+        vals = np.<span class="fn">clip</span>(np.random.<span class="fn">normal</span>(<span class="num">7.2</span>,<span class="num">1.5</span>,<span class="num">500</span>), <span class="num">0</span>, <span class="num">10</span>)
+        ax.<span class="fn">hist</span>(vals, bins=<span class="num">20</span>, color=<span class="str">"#cba6f7"</span>, edgecolor=SURFACE, alpha=<span class="num">0.85</span>)
+        ax.<span class="fn">axvline</span>(vals.<span class="fn">mean</span>(),   color=<span class="str">"#f38ba8"</span>, lw=<span class="num">2</span>, linestyle=<span class="str">"--"</span>,
+                   label=<span class="str">f"Media {vals.mean():.1f}"</span>)
+        ax.<span class="fn">axvline</span>(np.<span class="fn">median</span>(vals), color=<span class="str">"#a6e3a1"</span>, lw=<span class="num">2</span>, linestyle=<span class="str">":"</span>,
+                   label=<span class="str">f"Mediana {np.median(vals):.1f}"</span>)
+        ax.<span class="fn">set_title</span>(<span class="str">"Soddisfazione Clienti (0-10)"</span>); ax.<span class="fn">legend</span>()
+
+        <span class="cm"># Area stackplot</span>
+        ax = axes[<span class="num">2</span>][<span class="num">1</span>]
+        t = np.<span class="fn">linspace</span>(<span class="num">0</span>, <span class="num">4</span>*np.pi, <span class="num">300</span>)
+        A = <span class="num">0.5</span>+<span class="num">0.5</span>*np.<span class="fn">sin</span>(t*<span class="num">0.8</span>)
+        B = <span class="num">0.5</span>+<span class="num">0.5</span>*np.<span class="fn">sin</span>(t*<span class="num">0.8</span>+np.pi/<span class="num">3</span>)
+        C = <span class="num">0.5</span>+<span class="num">0.5</span>*np.<span class="fn">sin</span>(t*<span class="num">0.8</span>+<span class="num">2</span>*np.pi/<span class="num">3</span>)
+        ax.<span class="fn">stackplot</span>(t, A, B, C, labels=[<span class="str">'A'</span>,<span class="str">'B'</span>,<span class="str">'C'</span>],
+                    colors=[ACCENT,<span class="str">"#4caf50"</span>,<span class="str">"#555"</span>], alpha=<span class="num">0.8</span>)
+        ax.<span class="fn">set_title</span>(<span class="str">"Segnale Multi-canale"</span>); ax.<span class="fn">legend</span>(loc=<span class="str">"upper right"</span>)
+
+        <span class="kw">return</span> fig
+
+    <span class="cm"># ── Viste singole ───────────────────────────</span>
+    <span class="kw">def</span> <span class="fn">_view_linee</span>(self):
+        fig, ax = plt.<span class="fn">subplots</span>(figsize=(<span class="num">12</span>,<span class="num">7</span>))
+        mesi = [<span class="str">'Gen'</span>,<span class="str">'Feb'</span>,<span class="str">'Mar'</span>,<span class="str">'Apr'</span>,<span class="str">'Mag'</span>,<span class="str">'Giu'</span>,
+                <span class="str">'Lug'</span>,<span class="str">'Ago'</span>,<span class="str">'Set'</span>,<span class="str">'Ott'</span>,<span class="str">'Nov'</span>,<span class="str">'Dic'</span>]
+        np.random.<span class="fn">seed</span>(<span class="num">1</span>)
+        <span class="kw">for</span> i,c <span class="kw">in</span> <span class="fn">enumerate</span>(COLORS[:<span class="num">3</span>]):
+            y = np.random.<span class="fn">randint</span>(<span class="num">80</span>,<span class="num">220</span>,<span class="num">12</span>)
+            ax.<span class="fn">plot</span>(mesi,y,<span class="str">'o-'</span>,color=c,lw=<span class="num">2</span>,ms=<span class="num">5</span>,label=<span class="str">f"Serie {i+1}"</span>)
+            ax.<span class="fn">fill_between</span>(mesi,y,alpha=<span class="num">0.05</span>,color=c)
+        ax.<span class="fn">set_title</span>(<span class="str">"Trend Annuale"</span>,fontsize=<span class="num">14</span>); ax.<span class="fn">legend</span>(); ax.<span class="fn">grid</span>(<span class="kw">True</span>)
+        <span class="kw">return</span> fig
+
+    <span class="kw">def</span> <span class="fn">_view_barre</span>(self):
+        fig, ax = plt.<span class="fn">subplots</span>(figsize=(<span class="num">12</span>,<span class="num">7</span>))
+        cat = [<span class="str">'Q1'</span>,<span class="str">'Q2'</span>,<span class="str">'Q3'</span>,<span class="str">'Q4'</span>]
+        <span class="kw">for</span> i,c <span class="kw">in</span> <span class="fn">enumerate</span>(COLORS[:<span class="num">3</span>]):
+            ax.<span class="fn">bar</span>(np.<span class="fn">arange</span>(<span class="num">4</span>)+i*<span class="num">0.25</span>, np.random.<span class="fn">randint</span>(<span class="num">100</span>,<span class="num">500</span>,<span class="num">4</span>),
+                  <span class="num">0.25</span>, color=c, label=<span class="str">f"Prodotto {i+1}"</span>)
+        ax.<span class="fn">set_xticks</span>(np.<span class="fn">arange</span>(<span class="num">4</span>)+<span class="num">0.25</span>); ax.<span class="fn">set_xticklabels</span>(cat)
+        ax.<span class="fn">set_title</span>(<span class="str">"Vendite per Trimestre"</span>,fontsize=<span class="num">14</span>); ax.<span class="fn">legend</span>()
+        <span class="kw">return</span> fig
+
+    <span class="kw">def</span> <span class="fn">_view_torta</span>(self):
+        fig, ax = plt.<span class="fn">subplots</span>(figsize=(<span class="num">10</span>,<span class="num">8</span>))
+        ax.<span class="fn">pie</span>([<span class="num">30</span>,<span class="num">25</span>,<span class="num">20</span>,<span class="num">15</span>,<span class="num">10</span>],
+              labels=[<span class="str">'A'</span>,<span class="str">'B'</span>,<span class="str">'C'</span>,<span class="str">'D'</span>,<span class="str">'E'</span>], colors=COLORS,
+              autopct=<span class="str">'%1.1f%%'</span>, startangle=<span class="num">90</span>,
+              wedgeprops=<span class="fn">dict</span>(width=<span class="num">0.55</span>,edgecolor=SURFACE,linewidth=<span class="num">2</span>),
+              textprops=<span class="fn">dict</span>(color=TEXT))
+        ax.<span class="fn">set_title</span>(<span class="str">"Distribuzione Portfolio"</span>,fontsize=<span class="num">14</span>)
+        <span class="kw">return</span> fig
+
+    <span class="kw">def</span> <span class="fn">_view_scatter</span>(self):
+        fig, ax = plt.<span class="fn">subplots</span>(figsize=(<span class="num">12</span>,<span class="num">7</span>))
+        np.random.<span class="fn">seed</span>(<span class="num">5</span>)
+        <span class="kw">for</span> c <span class="kw">in</span> COLORS:
+            x = np.random.<span class="fn">normal</span>(<span class="num">50</span>,<span class="num">20</span>,<span class="num">80</span>)
+            y = x * <span class="num">0.7</span> + np.random.<span class="fn">normal</span>(<span class="num">0</span>,<span class="num">10</span>,<span class="num">80</span>)
+            ax.<span class="fn">scatter</span>(x,y,color=c,alpha=<span class="num">0.6</span>,s=<span class="num">60</span>)
+        ax.<span class="fn">set_title</span>(<span class="str">"Correlazione Multi-cluster"</span>,fontsize=<span class="num">14</span>)
+        ax.<span class="fn">set_xlabel</span>(<span class="str">"Variabile X"</span>); ax.<span class="fn">set_ylabel</span>(<span class="str">"Variabile Y"</span>)
+        <span class="kw">return</span> fig
+
+    <span class="kw">def</span> <span class="fn">_view_istogramma</span>(self):
+        fig, ax = plt.<span class="fn">subplots</span>(figsize=(<span class="num">12</span>,<span class="num">7</span>))
+        np.random.<span class="fn">seed</span>(<span class="num">7</span>)
+        dati = np.<span class="fn">clip</span>(np.random.<span class="fn">normal</span>(<span class="num">7</span>,<span class="num">2</span>,<span class="num">1000</span>),<span class="num">0</span>,<span class="num">10</span>)
+        ax.<span class="fn">hist</span>(dati,bins=<span class="num">30</span>,color=COLORS[<span class="num">4</span>],edgecolor=SURFACE,alpha=<span class="num">0.9</span>)
+        ax.<span class="fn">axvline</span>(dati.<span class="fn">mean</span>(),color=COLORS[<span class="num">2</span>],lw=<span class="num">2</span>,linestyle=<span class="str">"--"</span>,
+                   label=<span class="str">f"μ={dati.mean():.2f}"</span>)
+        ax.<span class="fn">set_title</span>(<span class="str">"Distribuzione NPS"</span>,fontsize=<span class="num">14</span>); ax.<span class="fn">legend</span>()
+        <span class="kw">return</span> fig
+
+    <span class="kw">def</span> <span class="fn">_view_area</span>(self):
+        fig, ax = plt.<span class="fn">subplots</span>(figsize=(<span class="num">12</span>,<span class="num">7</span>))
+        t = np.<span class="fn">linspace</span>(<span class="num">0</span>,<span class="num">4</span>*np.pi,<span class="num">400</span>)
+        segnali = [np.<span class="num">0.5</span>+np.<span class="num">0.5</span>*np.<span class="fn">sin</span>(t*<span class="num">0.8</span>+i*np.pi/<span class="num">3</span>) <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">4</span>)]
+        ax.<span class="fn">stackplot</span>(t,*segnali,
+                    labels=[<span class="str">f"Canale {i+1}"</span> <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">4</span>)],
+                    colors=COLORS, alpha=<span class="num">0.75</span>)
+        ax.<span class="fn">set_title</span>(<span class="str">"Segnali Multi-canale"</span>,fontsize=<span class="num">14</span>)
+        ax.<span class="fn">legend</span>(loc=<span class="str">"upper right"</span>)
+        <span class="kw">return</span> fig
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    <span class="cls">Dashboard</span>().<span class="fn">mainloop</span>()</pre>
+        </div>
+
+        <h2>Grafici in tempo reale con after()</h2>
+        <p>Combinando <code>after()</code> di Tkinter con <code>canvas.draw()</code> puoi creare grafici che si <strong>aggiornano automaticamente</strong>:</p>
+
+        <div class="code-block">
+          <div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span>grafico_realtime.py</span><button class="code-copy">copia</button></div>
+          <pre><span class="kw">import</span> tkinter <span class="kw">as</span> tk
+<span class="kw">import</span> matplotlib; matplotlib.<span class="fn">use</span>(<span class="str">'TkAgg'</span>)
+<span class="kw">from</span> matplotlib.figure <span class="kw">import</span> <span class="cls">Figure</span>
+<span class="kw">from</span> matplotlib.backends.backend_tkagg <span class="kw">import</span> <span class="cls">FigureCanvasTkAgg</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> collections <span class="kw">import</span> deque
+
+root = tk.<span class="cls">Tk</span>()
+root.<span class="fn">title</span>(<span class="str">"Monitoraggio CPU (Simulato)"</span>)
+root.<span class="fn">configure</span>(bg=<span class="str">"#0d0d0d"</span>)
+
+fig = <span class="cls">Figure</span>(figsize=(<span class="num">10</span>, <span class="num">4</span>), dpi=<span class="num">100</span>, facecolor=<span class="str">"#141414"</span>)
+ax  = fig.<span class="fn">add_subplot</span>(<span class="num">111</span>)
+ax.<span class="fn">set_facecolor</span>(<span class="str">"#0d0d0d"</span>)
+ax.<span class="fn">set_ylim</span>(<span class="num">0</span>, <span class="num">100</span>)
+ax.<span class="fn">set_ylabel</span>(<span class="str">"CPU %"</span>, color=<span class="str">"#aaa"</span>)
+ax.<span class="fn">tick_params</span>(colors=<span class="str">"#555"</span>)
+ax.<span class="fn">grid</span>(alpha=<span class="num">0.15</span>, color=<span class="str">"#333"</span>)
+
+canvas = <span class="cls">FigureCanvasTkAgg</span>(fig, master=root)
+canvas.<span class="fn">get_tk_widget</span>().<span class="fn">pack</span>(fill=<span class="str">"both"</span>, expand=<span class="kw">True</span>)
+
+<span class="cm"># Buffer circolare (ultimi 60 campioni)</span>
+N = <span class="num">60</span>
+dati_cpu = deque([<span class="num">0</span>] * N, maxlen=N)
+linea, = ax.<span class="fn">plot</span>([], [], color=<span class="str">"#00bcd4"</span>, linewidth=<span class="num">1.5</span>)
+fill  = [<span class="kw">None</span>]
+
+<span class="kw">def</span> <span class="fn">aggiorna</span>():
+    <span class="cm"># Simula valore CPU (sostituire con psutil.cpu_percent())</span>
+    nuovo = np.random.<span class="fn">uniform</span>(<span class="num">10</span>, <span class="num">90</span>)
+    dati_cpu.<span class="fn">append</span>(nuovo)
+
+    x = <span class="fn">list</span>(<span class="fn">range</span>(N))
+    y = <span class="fn">list</span>(dati_cpu)
+
+    linea.<span class="fn">set_data</span>(x, y)
+    ax.<span class="fn">set_xlim</span>(<span class="num">0</span>, N - <span class="num">1</span>)
+
+    <span class="kw">if</span> fill[<span class="num">0</span>]:
+        fill[<span class="num">0</span>].<span class="fn">remove</span>()
+    fill[<span class="num">0</span>] = ax.<span class="fn">fill_between</span>(x, y, alpha=<span class="num">0.15</span>, color=<span class="str">"#00bcd4"</span>)
+
+    canvas.<span class="fn">draw_idle</span>()                  <span class="cm"># più efficiente di draw()</span>
+    root.<span class="fn">after</span>(<span class="num">500</span>, aggiorna)           <span class="cm"># aggiorna ogni 500ms</span>
+
+<span class="fn">aggiorna</span>()
+root.<span class="fn">mainloop</span>()</pre>
+        </div>
+
+        <h2>Salvare grafici in PNG/PDF</h2>
+        <div class="code-block">
+          <div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span>salva_grafico.py</span><button class="code-copy">copia</button></div>
+          <pre><span class="kw">from</span> tkinter <span class="kw">import</span> filedialog
+
+<span class="kw">def</span> <span class="fn">salva_grafico</span>(fig):
+    percorso = filedialog.<span class="fn">asksaveasfilename</span>(
+        defaultextension=<span class="str">".png"</span>,
+        filetypes=[
+            (<span class="str">"PNG Image"</span>,  <span class="str">"*.png"</span>),
+            (<span class="str">"PDF"</span>,         <span class="str">"*.pdf"</span>),
+            (<span class="str">"SVG Vector"</span>,  <span class="str">"*.svg"</span>),
+            (<span class="str">"JPEG"</span>,        <span class="str">"*.jpg"</span>),
+        ],
+        initialfile=<span class="str">"grafico"</span>
+    )
+    <span class="kw">if</span> percorso:
+        fig.<span class="fn">savefig</span>(
+            percorso,
+            dpi=<span class="num">150</span>,               <span class="cm"># risoluzione alta stampa</span>
+            bbox_inches=<span class="str">"tight"</span>,   <span class="cm"># nessun bordo bianco extra</span>
+            facecolor=fig.<span class="fn">get_facecolor</span>()
+        )
+        <span class="kw">from</span> tkinter <span class="kw">import</span> messagebox
+        messagebox.<span class="fn">showinfo</span>(<span class="str">"Salvato"</span>, <span class="str">f"✅ Grafico salvato:\n{percorso}"</span>)
+
+<span class="cm"># Aggiungi bottone salva in Tkinter</span>
+tk.<span class="cls">Button</span>(root, text=<span class="str">"💾 Salva PNG"</span>,
+         command=<span class="kw">lambda</span>: <span class="fn">salva_grafico</span>(fig)).<span class="fn">pack</span>(pady=<span class="num">6</span>)</pre>
+        </div>
+
+        <div class="callout callout-tip">
+          <span class="callout-label">🚀 Librerie complementari</span>
+          <strong>Seaborn</strong> — grafici statistici avanzati con stile automatico · <strong>Plotly</strong> — grafici interattivi (meno adatto a Tkinter, meglio per web) · <strong>psutil</strong> — dati reali di CPU/RAM/disco per dashboard di sistema · <strong>pandas</strong> — manipolazione dati prima della visualizzazione
+        </div>
+
+        <div class="quiz-box">
+          <h3>🧠 Quiz — Lezione 15</h3>
+          <p style="color:var(--muted);font-size:14px;margin-bottom:12px;">Quale classe si usa per incorporare un grafico Matplotlib in una finestra Tkinter?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-correct="false"><span class="opt-key">A</span> <code>MatplotlibTk</code></div>
+            <div class="quiz-opt" data-correct="true"><span class="opt-key">B</span> <code>FigureCanvasTkAgg</code></div>
+            <div class="quiz-opt" data-correct="false"><span class="opt-key">C</span> <code>TkCanvas(fig)</code></div>
+            <div class="quiz-opt" data-correct="false"><span class="opt-key">D</span> <code>plt.show(master=root)</code></div>
+          </div>
+          <div class="quiz-result" id="qr-14a"></div>
+        </div>
+        <div class="quiz-box">
+          <h3>✏️ Esercizio — Grafico in tempo reale</h3>
+          <p style="color:var(--muted);font-size:14px;margin-bottom:12px;">Per aggiornare un grafico ogni 500ms senza bloccare la GUI, quale coppia di metodi si usa?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-correct="false"><span class="opt-key">A</span> <code>time.sleep(0.5)</code> + <code>canvas.draw()</code></div>
+            <div class="quiz-opt" data-correct="true"><span class="opt-key">B</span> <code>root.after(500, aggiorna)</code> + <code>canvas.draw_idle()</code></div>
+            <div class="quiz-opt" data-correct="false"><span class="opt-key">C</span> <code>threading.Timer(0.5, aggiorna)</code> + <code>canvas.draw()</code></div>
+            <div class="quiz-opt" data-correct="false"><span class="opt-key">D</span> <code>root.update()</code> + <code>fig.refresh()</code></div>
+          </div>
+          <div class="quiz-result" id="qr-14b"></div>
+        </div>
+        <div class="quiz-box">
+          <h3>🧠 Quiz — Salvataggio</h3>
+          <p style="color:var(--muted);font-size:14px;margin-bottom:12px;">Quale metodo di Matplotlib salva la figura in un file PNG ad alta risoluzione?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-correct="false"><span class="opt-key">A</span> <code>plt.export("file.png")</code></div>
+            <div class="quiz-opt" data-correct="false"><span class="opt-key">B</span> <code>canvas.save("file.png")</code></div>
+            <div class="quiz-opt" data-correct="true"><span class="opt-key">C</span> <code>fig.savefig("file.png", dpi=150, bbox_inches="tight")</code></div>
+            <div class="quiz-opt" data-correct="false"><span class="opt-key">D</span> <code>fig.write_png("file.png")</code></div>
+          </div>
+          <div class="quiz-result" id="qr-14c"></div>
+        </div>
+
+        <div class="project-box">
+          <h2>🎓 Corso Completato — 15 Lezioni!</h2>
+          <p>Complimenti! Hai padroneggiato tutto lo stack Python Desktop:</p>
+          <ul style="margin-top:10px;line-height:2.2;">
+            <li>✅ <strong>Tkinter base</strong> — finestre, widget, layout, eventi</li>
+            <li>✅ <strong>Tkinter intermedio</strong> — binding, menu, dialogs, variabili</li>
+            <li>✅ <strong>Tkinter avanzato</strong> — temi ttk, MVC, OOP, drag&amp;drop</li>
+            <li>✅ <strong>Canvas</strong> — disegno 2D, animazioni, after()</li>
+            <li>✅ <strong>SQLite</strong> — database locale, CRUD con GUI</li>
+            <li>✅ <strong>SQL Server</strong> — pyodbc, stored procedure, transazioni</li>
+            <li>✅ <strong>Matplotlib</strong> — 6 tipi di grafico, dashboard, real-time</li>
+          </ul>
         </div>
 
       </div>

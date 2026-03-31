@@ -539,8 +539,8 @@ pre::-webkit-scrollbar-thumb:hover { background:#6b7280; }
 /* ── CALLOUTS ── */
 .callout { border-radius:8px; padding:14px 16px; margin:16px 0; border-left:4px solid; font-size:14px; line-height:1.6; }
 .callout-info  { background:var(--highlight-bg); border-color:var(--accent); color:var(--text); }
-.callout-tip   { background:var(--callout-tip-bg); border-color:var(--accent2); color:var(--callout-tip-text); }
-.callout-warn  { background:var(--callout-warn-bg); border-color:var(--accent4); color:var(--callout-warn-text); }
+.callout-tip { background:var(--callout-tip-bg,#e6f4ea); border-color:var(--accent2); color:var(--callout-tip-text,#1a5c28); }
+.callout-warn { background:var(--callout-warn-bg,#fff8e1); border-color:var(--accent4); color:var(--callout-warn-text,#7a5300); }
 .callout-label { font-weight:800; font-size:11px; letter-spacing:1px; text-transform:uppercase; margin-bottom:5px; display:block; }
 
 /* ── QUIZ ── */
@@ -623,7 +623,7 @@ pre::-webkit-scrollbar-thumb:hover { background:#6b7280; }
   font-size:13px; font-weight:800; color:var(--accent); transition:background .4s;
   box-shadow:inset 0 0 0 6px var(--surface2);
 }
-.rp-survey { background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 80%,#000)); border-radius:10px; padding:14px; }
+.rp-survey { background:linear-gradient(135deg,var(--accent),rgba(0,0,0,.25)); border-radius:10px; padding:14px; }
 .rp-survey h4 { font-size:13px; font-weight:800; margin-bottom:6px; color:#fff; }
 .rp-survey p { font-size:11px; opacity:.85; margin-bottom:10px; line-height:1.5; color:#fff; }
 .rp-survey a {
@@ -633,7 +633,7 @@ pre::-webkit-scrollbar-thumb:hover { background:#6b7280; }
 .rp-survey a:hover { opacity:.9; }
 
 /* ── OVERLAY ── */
-.sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:150; }
+.sidebar-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); z-index:150; }
 .sidebar-overlay.show { display:block; }
 
 /* ── SCROLLBAR ── */
